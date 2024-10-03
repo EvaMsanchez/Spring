@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eva.curso.springboot.webapp.springboot_web.models.User;
+import com.eva.curso.springboot.webapp.springboot_web.models.dto.UserDto;
 
 // Convertir en una APIRest
 // Devuelve el contenido como un JSON
@@ -18,7 +19,20 @@ public class UserRestController
     // Método
     // Petición a través de una ruta navegador
     @GetMapping("/details") // No puede haber más de un método con la misma ruta, tiene que ser única
-    public Map<String, Object> details()
+    public UserDto details()
+    {
+        UserDto userDto = new UserDto();
+        // Objeto user del models
+        User user = new User("Eva", "Sánchez");
+        userDto.setUser(user);
+        userDto.setTitle("Hola Mundo Spring Boot");
+        
+        return userDto; // devuelve un objeto JSON
+    }
+
+    
+    @GetMapping(path = "/details-map") // No puede haber más de un método con la misma ruta, tiene que ser única
+    public Map<String, Object> detailsMap()
     {
         // Objeto user del models
         User user = new User("Eva", "Sánchez");
