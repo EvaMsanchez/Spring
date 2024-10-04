@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.eva.curso.springboot.webapp.springboot_web.models.User;
 
@@ -35,15 +36,23 @@ public class UserController
     @GetMapping("/list")
     public String list(ModelMap model) 
     {
+        //model.addAttribute("users", users);
+        model.addAttribute("title", "Listado de usuarios");
+        return "list";
+    }
+
+
+    // Método que va a devolver una lista de usuarios y con la anotación se va a guardar en el nombre que pongamos
+    @ModelAttribute("users") 
+    public List<User> usersModel()
+    {
         List<User> users = Arrays.asList(
             new User("Pepa", "González"),
             new User("Lalo", "Pérez", "lalo@gmail.com"),
             new User("Juanita", "Roe", "juana@gmail.com"),
             new User("Eva", "Sánchez"));
-        
-        model.addAttribute("users", users);
-        model.addAttribute("title", "Listado de usuarios");
-        return "list";
+
+        return users;
     }
     
 }

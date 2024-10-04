@@ -10,7 +10,7 @@
     <!-- así no funciona porque es una lista vacía y es 0 cuando está vacía, no null: th:if="${users ==null} -->
     <div th:if="${users.size() ==0}" th:text="${'No tiene elementos usuarios'}"></div> <!-- o así: th:if="${users.isEmpty()}" -->
 
-    <table>
+    <table th:if="${not users.isEmpty()}">
         <thead>
             <tr>
                 <th>name</th>
