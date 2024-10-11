@@ -1,6 +1,7 @@
 package com.eva.curso.springboot.webapp.springboot_web.controllers;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -27,10 +28,27 @@ public class PathVariableController
     //private String message;
     
     @Value("${config.listOfValues}")
-    private String[] listOfValues;
+    //private String[] listOfValues;
+    private List<String> listOfValues;
 
     @Value("${config.code}")
     private Integer code;
+
+    // Con lenguaje de expresión de Spring (#), es lo mismo pero de forma manual
+    @Value("#{'${config.listOfValues}'.toUpperCase().split(',')}")
+    private List<String> valueList;
+
+    @Value("#{'${config.listOfValues}'.toUpperCase()}")
+    private String valueString;
+
+    @Value("#{${config.valuesMap}}")
+    private Map<String, Object> valuesMap;
+
+    @Value("#{${config.valuesMap}.product}")
+    private String product;
+
+    @Value("#{${config.valuesMap}.price}")
+    private Long price;
 
 
     // Método para obtener parámetros de la ruta a través de una variable
@@ -53,7 +71,7 @@ public class PathVariableController
     }
 
 
-    // Método que realiza una petición POST, en el cuerpo del body no por URL
+    // Método que realiza una petición POST, se envía en el cuerpo del body no por URL
     @PostMapping("/create")
     public User create(@RequestBody User user)
     {
@@ -62,7 +80,7 @@ public class PathVariableController
     }
 
 
-    // Método que realiza una petición POST, en el cuerpo del body no por URL
+    // Método inyectando valores de un archivo properties personalizado
     @GetMapping("/values")
     public Map<String, Object> values(@Value("${config.message}") String message)
     {
@@ -71,6 +89,11 @@ public class PathVariableController
         json.put("code", code);
         json.put("message", message);
         json.put("listOfValues", listOfValues);
+        json.put("valueList", valueList);
+        json.put("valueString", valueString);
+        json.put("valuesMap", valuesMap);
+        json.put("product", product);
+        json.put("price", price);
         return json;
     }
      

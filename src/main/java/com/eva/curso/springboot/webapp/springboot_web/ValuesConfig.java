@@ -8,7 +8,7 @@ import org.springframework.context.annotation.PropertySources;
 // Para agregar archivos personalizados
 @PropertySources
 ({
-	@PropertySource("classpath:values.properties"),
+	@PropertySource(value="classpath:values.properties", encoding = "UTF-8"),
 })
 public class ValuesConfig 
 {
