@@ -3,6 +3,7 @@ package com.eva.curso.springboot.webapp.springboot_web.controllers;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,20 @@ import com.eva.curso.springboot.webapp.springboot_web.models.dto.ParamDto;
 @RequestMapping("/api/var")
 public class PathVariableController 
 {
+    // Atributos que coincidan con la configuración del properties
+    @Value("${config.username}")
+    private String username;
+
+    //@Value("${config.message}")
+    //private String message;
+    
+    @Value("${config.listOfValues}")
+    private String[] listOfValues;
+
+    @Value("${config.code}")
+    private Integer code;
+
+
     // Método para obtener parámetros de la ruta a través de una variable
     @GetMapping("/baz/{message}")
     public ParamDto baz (@PathVariable String message) // mismo nombre que la variable de la ruta
@@ -45,4 +60,18 @@ public class PathVariableController
         user.setName(user.getName().toUpperCase());
         return user; // devuelve el objeto que recibimos JSON pero por POST
     }
+
+
+    // Método que realiza una petición POST, en el cuerpo del body no por URL
+    @GetMapping("/values")
+    public Map<String, Object> values(@Value("${config.message}") String message)
+    {
+        Map<String, Object> json = new HashMap<>();
+        json.put("username", username);
+        json.put("code", code);
+        json.put("message", message);
+        json.put("listOfValues", listOfValues);
+        return json;
+    }
+     
 }
