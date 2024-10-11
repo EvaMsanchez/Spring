@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,7 +22,7 @@ import com.eva.curso.springboot.webapp.springboot_web.models.dto.ParamDto;
 @RequestMapping("/api/var")
 public class PathVariableController 
 {
-    // Atributos que coincidan con la configuración del properties
+    // Atributos que coincidan con la configuración del properties, inyección de configuraciones
     @Value("${config.username}")
     private String username;
 
@@ -49,6 +51,11 @@ public class PathVariableController
 
     @Value("#{${config.valuesMap}.price}")
     private Long price;
+
+
+    // Objeto Spring Environment (ya lo podemos utilizar) inyección de dependencias
+    @Autowired
+    private Environment environment;
 
 
     // Método para obtener parámetros de la ruta a través de una variable
@@ -84,10 +91,20 @@ public class PathVariableController
     @GetMapping("/values")
     public Map<String, Object> values(@Value("${config.message}") String message)
     {
+        Long code2 = environment.getProperty("config.code", Long.class);
+
         Map<String, Object> json = new HashMap<>();
         json.put("username", username);
         json.put("code", code);
         json.put("message", message);
+
+        // Otra forma de obtener la información de los properties con Environment (se recibe por defecto como String)
+        json.put("message2", environment.getProperty("config.message"));
+        json.put("code2", code2);
+        // Otra forma de pasar a número entero el code
+        //json.put("code2", Integer.valueOf(environment.getProperty("config.code")));
+        
+
         json.put("listOfValues", listOfValues);
         json.put("valueList", valueList);
         json.put("valueString", valueString);
