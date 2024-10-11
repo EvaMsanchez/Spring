@@ -19,7 +19,6 @@ import com.eva.curso.springboot.webapp.springboot_web.models.dto.UserDto;
 @RequestMapping("/api") // ruta base, primer nombre en la ruta
 public class UserRestController 
 {
-    // Método
     // Petición a través de una ruta navegador
     @GetMapping("/details") // No puede haber más de un método con la misma ruta, tiene que ser única
     public UserDto details()

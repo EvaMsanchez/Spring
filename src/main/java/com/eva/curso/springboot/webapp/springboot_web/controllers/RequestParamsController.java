@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/api/params")
 public class RequestParamsController 
 {
-    // Método que recibe parámetros a través de la URL
+    // Método que recibe UN parámetro a través de la URL
     @GetMapping("/foo")
     public ParamDto foo(@RequestParam(required = false, defaultValue = "Hola que tal") String message)
     {
@@ -27,6 +27,7 @@ public class RequestParamsController
     }
 
 
+    // Método que recibe VARIOS parámetros a través de la URL
     @GetMapping("/bar")
     public ParamMixDto bar(@RequestParam String text, @RequestParam Integer code)
     {
@@ -37,6 +38,7 @@ public class RequestParamsController
     }
 
 
+    // Método que recibe parámetros a través del objeto HttpServletRequest
     @GetMapping("/request")
     public ParamMixDto request(HttpServletRequest request)
     {

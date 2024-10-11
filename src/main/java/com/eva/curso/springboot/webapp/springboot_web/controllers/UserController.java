@@ -17,8 +17,8 @@ import com.eva.curso.springboot.webapp.springboot_web.models.User;
 @Controller
 public class UserController 
 {
-    // Método
     // Petición a través de una ruta navegador
+    // Método que devuelve una vista
     @GetMapping("/details")
     public String details(Model model)
     {
@@ -42,7 +42,7 @@ public class UserController
     }
 
 
-    // Método que va a devolver una lista de usuarios y con la anotación se va a guardar en el nombre que pongamos
+    // Método que va a devolver una lista de usuarios y con la anotación se va a guardar en el nombre que pongamos (users)
     @ModelAttribute("users") 
     public List<User> usersModel()
     {
